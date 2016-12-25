@@ -8,13 +8,16 @@ public class ConstraintDelay : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+		GetComponent<Rigidbody> ().useGravity = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		counter += Time.deltaTime;
 		if (counter >= delay) {
+			Debug.Log ("UNFREEZE");
 			GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+			GetComponent<Rigidbody> ().useGravity = false;
 			GetComponent<ConstraintDelay> ().enabled = false;
 		}
 	}
