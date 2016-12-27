@@ -15,10 +15,13 @@ public class ConstraintDelay : MonoBehaviour {
 	void Update () {
 		counter += Time.deltaTime;
 		if (counter >= delay) {
-			Debug.Log ("UNFREEZE");
-			GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
-			GetComponent<Rigidbody> ().useGravity = false;
-			GetComponent<ConstraintDelay> ().enabled = false;
+			if (GetComponent<Rigidbody> ().velocity.magnitude == 0) {
+				Debug.Log ("FREEZE");
+				GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+				GetComponent<Rigidbody> ().useGravity = false;
+				GetComponent<ConstraintDelay> ().enabled = false;
+			} else
+				counter = 0.0f;
 		}
 	}
 }

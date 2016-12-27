@@ -10,6 +10,11 @@ public class ClickToAddBlock : MonoBehaviour {
 	public GameObject placingObject;
 	public float offset = 1.0001f;
 	public float correctionRange = 2f;
+
+	private Stack<Vector3> buildingBox;
+	private Stack<GameObject> boxCursors;
+	private Vector3 firstPos;
+	private int boxPointCount;
 	// Use this for initialization
 	void Start () {
 		instantiatedGhost = (GameObject)Instantiate (selectedObjectGhost);
@@ -19,7 +24,12 @@ public class ClickToAddBlock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (1)) 
+		if (Input.GetKey (KeyCode.LeftControl)) {
+			if (Input.GetMouseButtonDown (1)) {
+
+			}
+		}
+		if (Input.GetMouseButtonUp (1)) 
 			BuildObject ();
 		GhostFollow ();
 	}
@@ -35,6 +45,8 @@ public class ClickToAddBlock : MonoBehaviour {
 		instantiatedGhost.SetActive (false);
 		instantiatedCursorInvis.SetActive (false);
 	}
+
+
 
 	void BuildObject() {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);

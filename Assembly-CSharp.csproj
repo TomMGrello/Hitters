@@ -56,6 +56,7 @@
      <Compile Include="Assets\Movement.cs" />
      <Compile Include="Assets\PlacementCheck.cs" />
      <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
+     <Compile Include="Assets\SnapPoints.cs" />
      <Compile Include="Assets\SnappableScript.cs" />
      <Compile Include="Assets\SpawnedPositionCorrection.cs" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
