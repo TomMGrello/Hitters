@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CannonAim.cs" />
      <Compile Include="Assets\ClickToAddBlock.cs" />
      <Compile Include="Assets\ConstraintDelay.cs" />
      <Compile Include="Assets\EnableRigidbodies.cs" />
