@@ -26,8 +26,8 @@ public class GhostFreeRoamCamera : MonoBehaviour
     {
         if (cursorToggleAllowed)
         {
-            Screen.lockCursor = true;
-            Cursor.visible = false;
+            //Screen.lockCursor = true;
+            // Cursor.visible = false;
         }
     }
 
@@ -36,6 +36,7 @@ public class GhostFreeRoamCamera : MonoBehaviour
         if (allowMovement)
         {
             bool lastMoving = moving;
+
             Vector3 deltaPosition = Vector3.zero;
 
             if (moving)
@@ -55,7 +56,7 @@ public class GhostFreeRoamCamera : MonoBehaviour
 
                 transform.position += deltaPosition * currentSpeed * Time.deltaTime;
             }
-            else currentSpeed = 0f;            
+            else currentSpeed = 0f;
         }
 
         if (allowRotation)
