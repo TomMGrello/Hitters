@@ -18,6 +18,7 @@ public class FireCannon : MonoBehaviour {
 	public float reloadTime = 10f;
 	public bool reloading = false;
 	public float count = 0.0f;
+	public int ammo = 5;
 
 	void Start() {
 		crb = cannonball.GetComponent<Rigidbody> ();
@@ -42,13 +43,14 @@ public class FireCannon : MonoBehaviour {
 	}
 
 	void Fire() {
-		if (!reloading) {
+		if (!reloading && ammo > 0) {
 			sound.Play ();
 			GameObject fired = (GameObject)Instantiate (cannonball, instantiatePos.position, Quaternion.identity);
 			Rigidbody frb = fired.GetComponent<Rigidbody> ();
 			frb.AddForce (instantiatePos.forward * power, ForceMode.Impulse);
 			reloading = true;
 			count = 0.0f;
+			ammo--;
 		}
 	}
 

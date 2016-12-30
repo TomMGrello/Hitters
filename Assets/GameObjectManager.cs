@@ -12,9 +12,11 @@ public class GameObjectManager : MonoBehaviour {
 	public static GameObject player;
 	public static Transform cameraTargetPlayer;
 	private bool check = true;
+	public static KeyCode pickupKey = KeyCode.F;
+	public static Transform playerHands;
 	// Use this for initialization
 	void Update () {
-		if (check && (buildSnap == null || buildGhost == null || buildCursor == null || placementCheck == null || buildModeScript == null || player == null || cameraTargetPlayer == null)) {
+		if (check && (buildSnap == null || buildGhost == null || buildCursor == null || placementCheck == null || buildModeScript == null || player == null || cameraTargetPlayer == null || playerHands == null)) {
 			if (buildCursor == null)
 				buildCursor = GameObject.FindGameObjectWithTag ("Cursor");
 			if (buildGhost == null)
@@ -27,7 +29,9 @@ public class GameObjectManager : MonoBehaviour {
 				buildModeScript = Camera.main.GetComponent<ClickToAddBlock> ();
 			if (player == null)
 				player = GameObject.FindGameObjectWithTag ("Player");
-			if (cameraTargetPlayer == null && player != null) {
+			if (playerHands == null && player != null)
+				playerHands = GameObject.FindGameObjectWithTag ("Hands").transform;
+			if (cameraTargetPlayer == null && player != null && playerHands != null) {
 				cameraTargetPlayer = GameObject.FindGameObjectWithTag ("CameraTargetPlayer").transform;
 				player.SetActive (false);
 			}

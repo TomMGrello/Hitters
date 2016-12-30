@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AddAmmoToCannon.cs" />
      <Compile Include="Assets\CannonAim.cs" />
      <Compile Include="Assets\CheckIfFloating.cs" />
      <Compile Include="Assets\ClickToAddBlock.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\ModeManager.cs" />
      <Compile Include="Assets\MoveToClick.cs" />
      <Compile Include="Assets\Movement.cs" />
+     <Compile Include="Assets\PickupAmmo.cs" />
      <Compile Include="Assets\PlacementCheck.cs" />
      <Compile Include="Assets\PlayerInteractScript.cs" />
      <Compile Include="Assets\PlotTrajectory.cs" />
