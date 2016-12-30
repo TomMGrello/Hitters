@@ -8,9 +8,10 @@ public class GameObjectManager : MonoBehaviour {
 	public static SnappableScript buildSnap;
 	public static PlacementCheck placementCheck;
 	public static ClickToAddBlock buildModeScript;
+	private bool check = true;
 	// Use this for initialization
 	void Update () {
-		if (buildSnap == null || buildGhost == null || buildCursor == null || placementCheck == null || buildModeScript == null) {
+		if (check && (buildSnap == null || buildGhost == null || buildCursor == null || placementCheck == null || buildModeScript == null)) {
 			if (buildCursor == null)
 				buildCursor = GameObject.FindGameObjectWithTag ("Cursor");
 			if (buildGhost == null)
@@ -21,7 +22,8 @@ public class GameObjectManager : MonoBehaviour {
 				placementCheck = buildGhost.GetComponent<PlacementCheck> ();
 			if (buildModeScript == null)
 				buildModeScript = Camera.main.GetComponent<ClickToAddBlock> ();
-		}
+		} else
+			check = false;
 	}
 
 }

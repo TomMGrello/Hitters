@@ -6,7 +6,7 @@ public class CannonAim : MonoBehaviour
 {
     private bool rotating = false;
     private Vector3 rotatePos;
-    public float rotatingSpeed = 0.5f;
+    public float rotatingSpeed = 1f;
     // Update is called once per frame
     void Update()
     {
@@ -32,8 +32,12 @@ public class CannonAim : MonoBehaviour
         }
         if (rotating)
         {
-            transform.LookAt(rotatePos);
-            //Debug.Log("ROTATING");
+			Vector3 targetDir = rotatePos - transform.position;
+			float step = rotatingSpeed * Time.deltaTime;
+			Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+			Debug.DrawRay(transform.position, newDir, Color.red);
+			transform.rotation = Quaternion.LookRotation(newDir);
+            Debug.Log("ROTATING");
             /*Quaternion rotationNeeded = Quaternion.FromToRotation(transform.position, rotatePos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotationNeeded, rotatingSpeed);
             if (transform.rotation.Equals(rotationNeeded))
