@@ -13,8 +13,24 @@ public class ModeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (buildModeKey))
-			GameObjectManager.buildModeScript.SetEnabled ();
+			BuildMode ();
 		if (Input.GetKeyDown (playModeKey))
-			GameObjectManager.buildModeScript.SetDisabled ();
+			GameMode();
+	}
+
+	void BuildMode() {
+		GameObjectManager.buildModeScript.SetEnabled ();
+		GameObjectManager.player.SetActive (false);
+		Camera.main.GetComponent<SimpleSmoothMouseLook> ().enabled = true;
+		Camera.main.GetComponent<GhostFreeRoamCamera> ().enabled = true;
+		Camera.main.GetComponent<SmoothFollowCSharp> ().enabled = false;
+	}
+
+	void GameMode() {
+		GameObjectManager.buildModeScript.SetDisabled ();
+		GameObjectManager.player.SetActive (true);
+		Camera.main.GetComponent<SimpleSmoothMouseLook> ().enabled = false;
+		Camera.main.GetComponent<GhostFreeRoamCamera> ().enabled = false;
+		Camera.main.GetComponent<SmoothFollowCSharp> ().enabled = true;
 	}
 }

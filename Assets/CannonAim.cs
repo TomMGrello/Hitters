@@ -7,12 +7,16 @@ public class CannonAim : MonoBehaviour
     private bool rotating = false;
     private Vector3 rotatePos;
     public float rotatingSpeed = 1f;
+	public bool developerMode = false;
     // Update is called once per frame
     void Update()
     {
         if (GameObjectManager.buildModeScript.enabled == false)
         {
-            LookToClick();
+			if (developerMode)
+				LookToClick ();
+			else
+				ButtonsToRotate ();
         }
     }
 
@@ -47,4 +51,12 @@ public class CannonAim : MonoBehaviour
             }*/
         }
     }
+
+	void ButtonsToRotate() {
+		float resultH = Input.GetAxis ("Horizontal");
+		if (resultH > 0)
+			transform.RotateAround (transform.position, Vector3.up, rotatingSpeed);
+		else if(resultH < 0)
+			transform.RotateAround (transform.position, Vector3.up, -rotatingSpeed);
+	}
 }

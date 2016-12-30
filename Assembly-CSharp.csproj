@@ -62,9 +62,11 @@
      <Compile Include="Assets\MoveToClick.cs" />
      <Compile Include="Assets\Movement.cs" />
      <Compile Include="Assets\PlacementCheck.cs" />
+     <Compile Include="Assets\PlayerInteractScript.cs" />
      <Compile Include="Assets\PlotTrajectory.cs" />
      <Compile Include="Assets\ResetScene.cs" />
      <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
+     <Compile Include="Assets\SmoothFollowCSharp.cs" />
      <Compile Include="Assets\SnapPoints.cs" />
      <Compile Include="Assets\SnappableScript.cs" />
      <Compile Include="Assets\SpawnedPositionCorrection.cs" />

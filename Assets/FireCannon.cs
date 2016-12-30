@@ -15,6 +15,9 @@ public class FireCannon : MonoBehaviour {
 	private Rigidbody crb;
 	private LineRenderer lr = new LineRenderer ();
 	private AudioSource sound;
+	public float reloadTime = 10f;
+	public bool reloading = false;
+	public float count = 0.0f;
 
 	void Start() {
 		crb = cannonball.GetComponent<Rigidbody> ();
@@ -23,6 +26,11 @@ public class FireCannon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (reloading) {
+			count += Time.deltaTime;
+			if (count >= reloadTime)
+				reloading = false;
+		}
 		if (Input.GetKeyDown (fireButton)) 
 			Fire ();
 		if (Input.GetKeyDown (toggleTrajectoryButton))
@@ -34,10 +42,14 @@ public class FireCannon : MonoBehaviour {
 	}
 
 	void Fire() {
-		sound.Play ();
-		GameObject fired = (GameObject)Instantiate (cannonball, instantiatePos.position, Quaternion.identity);
-		Rigidbody frb = fired.GetComponent<Rigidbody> ();
-		frb.AddForce (instantiatePos.forward * power,ForceMode.Impulse);
+		if (!reloading) {
+			sound.Play ();
+			GameObject fired = (GameObject)Instantiate (cannonball, instantiatePos.position, Quaternion.identity);
+			Rigidbody frb = fired.GetComponent<Rigidbody> ();
+			frb.AddForce (instantiatePos.forward * power, ForceMode.Impulse);
+			reloading = true;
+			count = 0.0f;
+		}
 	}
 
 	void DrawTrajectory() {
@@ -63,6 +75,7 @@ public class FireCannon : MonoBehaviour {
 
 	void FireGhost() {
 		GameObject fired = (GameObject)Instantiate (cannonballGhost, instantiatePos.position, Quaternion.identity);
+		fired.GetComponent<DestroyAfterContactAndTime> ().parentCannon = gameObject;
 		Rigidbody frb = fired.GetComponent<Rigidbody> ();
 		frb.AddForce (instantiatePos.forward * power,ForceMode.Impulse);
 	}
