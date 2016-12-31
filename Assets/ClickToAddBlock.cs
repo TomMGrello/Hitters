@@ -23,17 +23,7 @@ public class ClickToAddBlock : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-            }
-        }
-        else
-            if (Input.GetMouseButtonUp(1))
-            BuildObject();
+    void Update() {           
         GhostFollow();
     }
 
@@ -51,33 +41,12 @@ public class ClickToAddBlock : MonoBehaviour
         instantiatedCursorInvis.SetActive(false);
     }
 
-    void BuildObject()
+	void BuildObject(Vector3 pos, Quaternion rot)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
             if (GameObjectManager.placementCheck.isPlaceable())
             {
-                Vector3 placePos;
-
-                Quaternion rot;
-
-                if (GameObjectManager.buildSnap.GetSnappable())
-                {
-                    placePos = GameObjectManager.buildSnap.snappablePosition;
-                    rot = GameObjectManager.buildSnap.snappableRotation;
-                    GameObjectManager.buildSnap.snapObject.GetComponent<SpawnedPositionCorrection>().canPlaceOnTop = false;
-                }
-                else {
-                    placePos = new Vector3(hit.point.x, hit.point.y / 2 + placingObject.transform.localScale.y / 2, hit.point.z);
-                    rot = Quaternion.identity;
-                }
-                Instantiate(placingObject, placePos, rot);
+                Instantiate(placingObject, pos, rot);
             }
-        }
     }
 
     /*Vector3 GetFinalPlacement(Vector3 placePos) {
@@ -106,20 +75,25 @@ public class ClickToAddBlock : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            //instantiatedGhost.transform.position = hit.point;
-            float newPosY = hit.point.y + instantiatedGhost.transform.localScale.y / 2;
+			Vector3 pos;
+			Quaternion rot;
 
-            Vector3 pos = new Vector3(hit.point.x, newPosY, hit.point.z);
+			if (hit.collider.tag == "SnapPoint") {
+				pos = hit.collider.transform.position;
+				rot = hit.collider.transform.rotation;
+			} else {
+				float newPosY = hit.point.y + instantiatedGhost.transform.localScale.y / 2;
+				rot = Quaternion.identity;
+				pos = new Vector3 (hit.point.x, newPosY, hit.point.z);
+			}
+
             instantiatedCursorInvis.transform.position = pos;
-            if (GameObjectManager.buildSnap.GetSnappable())
-            {
-                instantiatedGhost.transform.position = GameObjectManager.buildSnap.snappablePosition;
-                instantiatedGhost.transform.rotation = GameObjectManager.buildSnap.snappableRotation;
-            }
-            else {
-                instantiatedGhost.transform.position = pos;
-                instantiatedGhost.transform.rotation = Quaternion.identity;
-            }
+			instantiatedGhost.transform.position = pos;
+			instantiatedGhost.transform.rotation = rot;
+
+			if (Input.GetMouseButtonUp(1))
+				BuildObject(pos,rot);
+           // }
         }
     }
 }

@@ -11,7 +11,7 @@ public class SpawnedPositionCorrection : MonoBehaviour {
 	}*/
 
 	void OnTriggerExit(Collider other) {
-		if (!canPlaceOnTop && other.gameObject.tag == "Movable")
-			canPlaceOnTop = true;
+	/*	if (!canPlaceOnTop && other.gameObject.tag == "Movable")
+			canPlaceOnTop = true;*/
 	}
 }

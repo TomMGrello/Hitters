@@ -48,18 +48,17 @@ public class FireCannon : MonoBehaviour
 
     void Fire()
     {
-        // if (!reloading && ammo > 0)
-        //{
-        GameObjectManager.player.GetComponent<AudioSource>().Play();
-        sound.Play();
-        GameObject fired = (GameObject)Instantiate(cannonball, instantiatePos.position, Quaternion.identity);
+         if (!reloading && ammo > 0) {
+	        GameObjectManager.player.GetComponent<AudioSource>().Play();
+	        sound.Play();
+	        GameObject fired = (GameObject)Instantiate(cannonball, instantiatePos.position, Quaternion.identity);
 
-        Rigidbody frb = fired.GetComponent<Rigidbody>();
-        frb.AddForce(instantiatePos.forward * power, ForceMode.Impulse);
-        reloading = true;
-        count = 0.0f;
-        ammo--;
-        //}
+	        Rigidbody frb = fired.GetComponent<Rigidbody>();
+	        frb.AddForce(instantiatePos.forward * power, ForceMode.Impulse);
+	        reloading = true;
+	        count = 0.0f;
+	        ammo--;
+        }
     }
 
     void DrawTrajectory()

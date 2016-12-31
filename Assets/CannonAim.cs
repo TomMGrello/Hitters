@@ -6,8 +6,15 @@ public class CannonAim : MonoBehaviour
 {
     private bool rotating = false;
     private Vector3 rotatePos;
-    public float rotatingSpeed = 1f;
+    public float rotatingSpeed = 0.15f;
 	public bool developerMode = false;
+	public Vector3 originalRotation;
+	public float verticalRotationClampAngle = 15f;
+
+	void Start() {
+		originalRotation = transform.rotation.eulerAngles;
+	}
+
     // Update is called once per frame
     void Update()
     {
@@ -54,9 +61,22 @@ public class CannonAim : MonoBehaviour
 
 	void ButtonsToRotate() {
 		float resultH = Input.GetAxis ("Horizontal");
+		float resultV = Input.GetAxis ("Vertical");
 		if (resultH > 0)
 			transform.RotateAround (transform.position, Vector3.up, rotatingSpeed);
 		else if(resultH < 0)
 			transform.RotateAround (transform.position, Vector3.up, -rotatingSpeed);
+		float angle = transform.eulerAngles.x;
+		angle = (angle > 180) ? angle - 360 : angle;
+		if (resultV > 0 && angle < 0)
+			transform.RotateAround (transform.position, transform.right, rotatingSpeed);
+		else if (resultV < 0 && angle > -verticalRotationClampAngle) {
+			Debug.Log ("Rotate up: " + transform.rotation.eulerAngles.x);
+			transform.RotateAround (transform.position, transform.right, -rotatingSpeed);
+		}
+		/*if (transform.rotation.eulerAngles.x < 0)
+			transform.rotation = Quaternion.Euler(new Vector3 (0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+		else if (Mathf.Abs (originalRotation.x - transform.rotation.eulerAngles.x) > verticalRotationClampAngle)
+			transform.rotation = Quaternion.Euler(new Vector3 (verticalRotationClampAngle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));*/
 	}
 }

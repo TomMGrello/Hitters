@@ -18,26 +18,41 @@ public class PlacementCheck : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void DebugCol(Collider other) {
+		if (other.tag != "SnapPoint")
+			Debug.Log ("Not a snap point: " + other.tag);
+		if (other.tag != "Movable")
+			Debug.Log ("Not moveable: " + other.tag);
+		else {
+			if (!(other.gameObject.GetComponent<SpawnedPositionCorrection> ().canPlaceOnTop))
+				Debug.Log ("Cannot place on top");
+		}
+	}
+
+	/*void OnTriggerEnter(Collider other) {
 		if (shouldSet) {
-			if (other.tag == "Movable" && GameObjectManager.buildSnap.GetSnappable() && other.gameObject.GetComponent<SpawnedPositionCorrection> ().canPlaceOnTop) {
+			if (other.tag == "SnapPoint" || other.tag == "Movable" && other.gameObject.GetComponent<SpawnedPositionCorrection> ().canPlaceOnTop) {
 				CanPlace ();
 			} else {
-				CannotPlace ();
+				CannotPlace (other);
 			}
 		}
-	}
+	}*/
 
 	void OnTriggerStay(Collider other) {
-		if (canPlace && shouldSet && !(GameObjectManager.buildSnap.GetSnappable() && other.gameObject.GetComponent<SpawnedPositionCorrection> ().canPlaceOnTop)) {
-			CannotPlace ();
-		}
+		//if (canPlace && shouldSet && !(other.gameObject.GetComponent<SpawnedPositionCorrection> ().canPlaceOnTop)) {
+		if (other.tag == "SnapPoint" || other.tag == "FloatCheck") {
+			CanPlace ();
+		} else
+			CannotPlace (other);
+		//}
 	}
 
-	void CannotPlace() {
+	void CannotPlace(Collider other) {
 		GetComponent<MeshRenderer> ().material = cannotPlaceMat;
 		canPlace = false;
 		shouldSet = false;
+		DebugCol (other);
 		//Debug.Log ("Colliding with " + other.gameObject.ToString ());
 	}
 
@@ -48,9 +63,9 @@ public class PlacementCheck : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider other) {
-		if (!shouldSet) {
+		//if (!shouldSet) {
 			CanPlace ();
-		}
+		//}
 	}
 
 	public bool isPlaceable() {
