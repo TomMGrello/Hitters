@@ -49,15 +49,26 @@ public class PlacementCheck : MonoBehaviour {
 	}
 
 	void CannotPlace(Collider other) {
-		GetComponent<MeshRenderer> ().material = cannotPlaceMat;
-		canPlace = false;
+		if (GetComponent<MeshRenderer> () != null)
+			GetComponent<MeshRenderer> ().material = cannotPlaceMat;
+		else {
+			MeshRenderer[] mrs = GetComponentsInChildren<MeshRenderer> ();
+			foreach (MeshRenderer mr in mrs)
+				mr.material = cannotPlaceMat;
+		}		canPlace = false;
 		shouldSet = false;
 		DebugCol (other);
 		//Debug.Log ("Colliding with " + other.gameObject.ToString ());
 	}
 
 	void CanPlace(){
-		GetComponent<MeshRenderer> ().material = canPlaceMat;
+		if (GetComponent<MeshRenderer> () != null)
+			GetComponent<MeshRenderer> ().material = canPlaceMat;
+		else {
+			MeshRenderer[] mrs = GetComponentsInChildren<MeshRenderer> ();
+			foreach (MeshRenderer mr in mrs)
+				mr.material = canPlaceMat;
+		}
 		canPlace = true;
 		shouldSet = true;
 	}

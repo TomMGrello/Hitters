@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ClickToAddBlock : MonoBehaviour
 {
-    public GameObject selectedObjectGhost;
+    public GameObject[] ghosts;
     private GameObject instantiatedGhost;
     public GameObject cursorInvis;
     private GameObject instantiatedCursorInvis;
-    public GameObject placingObject;
+    public GameObject[] placingObjects;
     public float offset = 1.0001f;
     public float correctionRange = 2f;
+	private int selection = 0;
 
     private Stack<Vector3> buildingBox;
     private Vector3 firstPos;
@@ -18,14 +19,32 @@ public class ClickToAddBlock : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        instantiatedGhost = (GameObject)Instantiate(selectedObjectGhost);
+		instantiatedGhost = (GameObject)Instantiate(ghosts[selection]);
         instantiatedCursorInvis = (GameObject)Instantiate(cursorInvis);
     }
 
     // Update is called once per frame
-    void Update() {           
+    void Update() {          
+		CheckForSelectionChange ();
         GhostFollow();
     }
+
+	void CheckForSelectionChange() {
+		float result = Input.GetAxis ("Mouse ScrollWheel");
+		if (result != 0)
+			ChangeSelection (result);
+	}
+
+	void ChangeSelection(float result) {
+		if (result < 0) 
+			selection = ((selection + 1) + ghosts.Length) % ghosts.Length;
+		else
+			selection = ((selection - 1) + ghosts.Length) % ghosts.Length;
+		Destroy (instantiatedGhost.gameObject);
+		GameObjectManager.placementCheck = ghosts [selection].GetComponent<PlacementCheck> ();
+		instantiatedGhost = (GameObject)Instantiate (ghosts [selection]);
+		
+	}
 
     public void SetEnabled()
     {
@@ -43,10 +62,8 @@ public class ClickToAddBlock : MonoBehaviour
 
 	void BuildObject(Vector3 pos, Quaternion rot)
     {
-            if (GameObjectManager.placementCheck.isPlaceable())
-            {
-                Instantiate(placingObject, pos, rot);
-            }
+        if (GameObjectManager.placementCheck.isPlaceable())
+			Instantiate(placingObjects[selection], pos, rot);
     }
 
     /*Vector3 GetFinalPlacement(Vector3 placePos) {
@@ -82,7 +99,7 @@ public class ClickToAddBlock : MonoBehaviour
 				pos = hit.collider.transform.position;
 				rot = hit.collider.transform.rotation;
 			} else {
-				float newPosY = hit.point.y + instantiatedGhost.transform.localScale.y / 2;
+				float newPosY = hit.point.y;
 				rot = Quaternion.identity;
 				pos = new Vector3 (hit.point.x, newPosY, hit.point.z);
 			}
@@ -91,8 +108,8 @@ public class ClickToAddBlock : MonoBehaviour
 			instantiatedGhost.transform.position = pos;
 			instantiatedGhost.transform.rotation = rot;
 
-			if (Input.GetMouseButtonUp(1))
-				BuildObject(pos,rot);
+			if (Input.GetMouseButtonDown(1))
+				BuildObject(instantiatedGhost.transform.position,instantiatedGhost.transform.rotation);
            // }
         }
     }
