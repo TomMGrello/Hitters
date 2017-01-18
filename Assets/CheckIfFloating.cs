@@ -39,7 +39,6 @@ public class CheckIfFloating : MonoBehaviour {
 		if (Valid (other)) {
 			if (!isGrounded ()) {
 				floating = true;
-				jus
 			}
 		}
 	}
