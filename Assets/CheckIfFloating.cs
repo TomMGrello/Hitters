@@ -7,7 +7,8 @@ public class CheckIfFloating : MonoBehaviour {
 	private Rigidbody rb;
 	public bool justStarted = true;
 	public bool floating = true;
-
+	public GameObject[] colliders;
+	public bool grounded = false;
 	void Start() {
 		rb = transform.parent.gameObject.GetComponent<Rigidbody> ();
 	}
@@ -30,12 +31,28 @@ public class CheckIfFloating : MonoBehaviour {
 	void OnTriggerStay(Collider other) {
 		if (Valid (other) && floating)
 			floating = false;
+		if (other.gameObject.layer == 8 && !grounded)
+			grounded = true;
 	}
 
 	void OnTriggerExit(Collider other) {
 		if (Valid (other)) {
-			floating = true;
+			if (!isGrounded ()) {
+				floating = true;
+				jus
+			}
 		}
+	}
+
+	public bool isGrounded() {
+		if (grounded)
+			return true;
+		foreach (GameObject current in colliders) {
+			FloatCheck fc = current.GetComponent<FloatCheck> ();
+			if (fc.collidingObject.GetComponent<CheckIfFloating> ().isGrounded ())
+				return true;
+		}
+		return false;
 	}
 
 	void ToggleJustStarted() {

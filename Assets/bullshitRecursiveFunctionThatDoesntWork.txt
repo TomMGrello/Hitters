@@ -1,0 +1,10 @@
+public bool isGrounded() {
+		if (grounded)
+			return true;
+		foreach (GameObject current in colliders) {
+			FloatCheck fc = current.GetComponent<FloatCheck> ();
+			if (fc.collidingObject.GetComponent<CheckIfFloating> ().isGrounded ())
+				return true;
+		}
+		return false;
+	}

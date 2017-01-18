@@ -56,6 +56,7 @@
      <Compile Include="Assets\EnabledSurroundingRigidbodies.cs" />
      <Compile Include="Assets\ExplodeScript.cs" />
      <Compile Include="Assets\FireCannon.cs" />
+     <Compile Include="Assets\FloatCheck.cs" />
      <Compile Include="Assets\GUIScript.cs" />
      <Compile Include="Assets\GameObjectManager.cs" />
      <Compile Include="Assets\GhostFreeRoamCamera\Scripts\GhostFreeRoamCamera.cs" />
@@ -89,6 +90,7 @@
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
      <None Include="Assets\True Explosions\System\Shaders\SphereVolumetricExplosion.shader" />
+     <None Include="Assets\bullshitRecursiveFunctionThatDoesntWork.txt" />
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
@@ -110,12 +112,6 @@
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Common">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
